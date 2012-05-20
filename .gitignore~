@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Uip1.0/Uip1.0.depend
 Uip1.0/Uip1.0.layout
 Uip1.0/Uip1.0.layout.cbTemp
@@ -17,4 +18,17 @@ Uip1.0/obj/
 apps/webserver/http-strings.c
 apps/webserver/http-strings.h
 apps/webserver/httpd-fsdata.c
+=======
+# Compiled Object files
+*.slo
+*.lo
+*.o
 
+# Compiled Dynamic libraries
+*.so
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+>>>>>>> bcc87b1dcd5f30b936635f23f996453419d45e68
