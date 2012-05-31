@@ -1,7 +1,7 @@
 %!: /header.html
 <meta http-equiv="refresh" content="5">
 <center>
-<h1>LED Status</h1><hr color="#258D92" size="2" width="90%">
+<h1>Irregation Channel Status</h1><hr color="#258D92" size="2" width="90%">
 <table width="80%" class="mytab"><center>
 <tr><th>LED Channel</th><th>Intensity</th><th>Status</th></tr>
 <tr><td>1</td><td>%! get-int 10

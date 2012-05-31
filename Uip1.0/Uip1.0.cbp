@@ -7,8 +7,8 @@
 		<Option compiler="sdcc" />
 		<Build>
 			<Target title="Build and Flash (Windows - Serial)">
-				<Option output="bin/Debug/Uip1.hex" prefix_auto="1" extension_auto="0" />
-				<Option object_output="obj/Debug/" />
+				<Option output="bin\Debug\Uip1.hex" prefix_auto="1" extension_auto="0" />
+				<Option object_output="obj\Debug\" />
 				<Option type="1" />
 				<Option compiler="sdcc" />
 				<ExtraCommands>
@@ -19,8 +19,8 @@
 				</ExtraCommands>
 			</Target>
 			<Target title="Build and Flash (Windows - USB)">
-				<Option output="bin/Debug/Uip1.hex" prefix_auto="1" extension_auto="0" />
-				<Option object_output="obj/Debug/" />
+				<Option output="bin\Debug\Uip1.hex" prefix_auto="1" extension_auto="0" />
+				<Option object_output="obj\Debug\" />
 				<Option type="1" />
 				<Option compiler="sdcc" />
 				<ExtraCommands>
@@ -31,8 +31,8 @@
 				</ExtraCommands>
 			</Target>
 			<Target title="Build (Windows)">
-				<Option output="bin/Debug/Uip1.hex" prefix_auto="1" extension_auto="0" />
-				<Option object_output="obj/Debug/" />
+				<Option output="bin\Debug\Uip1.hex" prefix_auto="1" extension_auto="0" />
+				<Option object_output="obj\Debug\" />
 				<Option type="1" />
 				<Option compiler="sdcc" />
 				<ExtraCommands>
@@ -42,8 +42,8 @@
 				</ExtraCommands>
 			</Target>
 			<Target title="Build (Linux)">
-				<Option output="bin/Debug/Uip1.hex" prefix_auto="1" extension_auto="0" />
-				<Option object_output="obj/Debug/" />
+				<Option output="bin\Debug\Uip1.hex" prefix_auto="1" extension_auto="0" />
+				<Option object_output="obj\Debug\" />
 				<Option type="1" />
 				<Option compiler="sdcc" />
 				<ExtraCommands>
@@ -53,8 +53,8 @@
 				</ExtraCommands>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/Uip1" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Release/" />
+				<Option output="bin\Release\Uip1" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Release\" />
 				<Option type="1" />
 				<Option compiler="sdcc" />
 			</Target>
@@ -66,234 +66,222 @@
 			<Add option="-DCONFIG_BANKED=1" />
 			<Add option="-DHAVE_FLASH=1" />
 			<Add option="-DINCLUDE_PSOCK_GEN_SEND=1" />
-			<Add directory="../apps/webserver" />
-			<Add directory="../uip" />
-			<Add directory="../unix" />
-			<Add directory="../ip_avenger" />
-			<Add directory="../driver" />
-			<Add directory="../lib" />
-			<Add directory="../pthreads" />
-			<Add directory="../pthreads/events/core" />
-			<Add directory="../pthreads/events/actions" />
-			<Add directory="../pthreads/events/events" />
+			<Add directory="..\apps\webserver" />
+			<Add directory="..\uip" />
+			<Add directory="..\unix" />
+			<Add directory="..\ip_avenger" />
+			<Add directory="..\driver" />
+			<Add directory="..\lib" />
+			<Add directory="..\pthreads" />
+			<Add directory="..\pthreads\events\core" />
+			<Add directory="..\pthreads\events\actions" />
+			<Add directory="..\pthreads\events\events" />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl-r" />
 			<Add option="-Wl-bUIP_BANK=0x28000" />
 			<Add option="-Wl-bAPP_BANK=0x38000" />
 		</Linker>
-		<Unit filename="../.gitignore" />
-		<Unit filename="../README" />
-		<Unit filename="../apps/webserver/base64.c">
+		<Unit filename="..\.gitignore" />
+		<Unit filename="..\README" />
+		<Unit filename="..\apps\webserver\base64.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../apps/webserver/base64.h" />
-		<Unit filename="../apps/webserver/http-strings" />
-		<Unit filename="../apps/webserver/http-strings.c">
+		<Unit filename="..\apps\webserver\base64.h" />
+		<Unit filename="..\apps\webserver\http-strings" />
+		<Unit filename="..\apps\webserver\http-strings.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../apps/webserver/http-strings.h" />
-		<Unit filename="../apps/webserver/httpd-cgi.c">
+		<Unit filename="..\apps\webserver\http-strings.h" />
+		<Unit filename="..\apps\webserver\httpd-cgi.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../apps/webserver/httpd-cgi.h" />
-		<Unit filename="../apps/webserver/httpd-fs.c">
+		<Unit filename="..\apps\webserver\httpd-cgi.h" />
+		<Unit filename="..\apps\webserver\httpd-fs.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../apps/webserver/httpd-fs/401.html" />
-		<Unit filename="../apps/webserver/httpd-fs/404.html" />
-		<Unit filename="../apps/webserver/httpd-fs/cgi/get_level.cgi" />
-		<Unit filename="../apps/webserver/httpd-fs/cgi/set_level.cgi" />
-		<Unit filename="../apps/webserver/httpd-fs/cgi/start_ramp.cgi" />
-		<Unit filename="../apps/webserver/httpd-fs/cgi/stop_ramp.cgi" />
-		<Unit filename="../apps/webserver/httpd-fs/cmap.shtml" />
-		<Unit filename="../apps/webserver/httpd-fs/dig.shtml" />
-		<Unit filename="../apps/webserver/httpd-fs/footer.html" />
-		<Unit filename="../apps/webserver/httpd-fs/header.html" />
-		<Unit filename="../apps/webserver/httpd-fs/index.shtml" />
-		<Unit filename="../apps/webserver/httpd-fs/map.shtml" />
-		<Unit filename="../apps/webserver/httpd-fs/netset.shtml" />
-		<Unit filename="../apps/webserver/httpd-fs/pirset.shtml" />
-		<Unit filename="../apps/webserver/httpd-fs/style.css" />
-		<Unit filename="../apps/webserver/httpd-fs/tentry.shtml" />
-		<Unit filename="../apps/webserver/httpd-fs/tevents.shtml" />
-		<Unit filename="../apps/webserver/httpd-fs/timeset.shtml" />
-		<Unit filename="../apps/webserver/httpd-fs/validate.js" />
-		<Unit filename="../apps/webserver/httpd-fsdata.c">
-			<Option compilerVar="CC" />
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
-		<Unit filename="../apps/webserver/httpd-fsdata.h" />
-		<Unit filename="../apps/webserver/httpd-param.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../apps/webserver/httpd-param.h" />
-		<Unit filename="../apps/webserver/httpd.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../apps/webserver/httpd.h" />
-		<Unit filename="../apps/webserver/makefsdata" />
-		<Unit filename="../apps/webserver/makestrings" />
-		<Unit filename="../apps/webserver/webserver.h" />
-		<Unit filename="../doc/pt-1.4-refman.pdf" />
-		<Unit filename="../doc/uip-refman.pdf" />
-		<Unit filename="../driver/CUart.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../driver/CUart.h" />
-		<Unit filename="../driver/adc.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../driver/adc.h" />
-		<Unit filename="../driver/comparator.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../driver/comparator.h" />
-		<Unit filename="../driver/dac.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../driver/dac.h" />
-		<Unit filename="../driver/dm9000.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../driver/dm9000.h" />
-		<Unit filename="../driver/flash.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../driver/flash.h" />
-		<Unit filename="../driver/i2c.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../driver/i2c.h" />
-		<Unit filename="../driver/i2c_isr.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../driver/if_dm9000.h" />
-		<Unit filename="../driver/pca.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../driver/pca.h" />
-		<Unit filename="../driver/rtc.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../driver/rtc.h" />
-		<Unit filename="../driver/rtc_i2c.h" />
-		<Unit filename="../driver/rtc_isr.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../driver/swtimers.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../driver/swtimers.h" />
-		<Unit filename="../ip_avenger/clock-arch.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../ip_avenger/clock-arch.h" />
-		<Unit filename="../ip_avenger/config.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../ip_avenger/fixed_addr.h" />
-		<Unit filename="../ip_avenger/iet_debug.h" />
-		<Unit filename="../ip_avenger/main.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../ip_avenger/main.h" />
-		<Unit filename="../ip_avenger/product.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../ip_avenger/product.h" />
-		<Unit filename="../ip_avenger/system.h" />
-		<Unit filename="../ip_avenger/util.c">
+		<Unit filename="..\apps\webserver\httpd-fs\401.html" />
+		<Unit filename="..\apps\webserver\httpd-fs\404.html" />
+		<Unit filename="..\apps\webserver\httpd-fs\cgi\get_level.cgi" />
+		<Unit filename="..\apps\webserver\httpd-fs\cgi\set_level.cgi" />
+		<Unit filename="..\apps\webserver\httpd-fs\cgi\start_ramp.cgi" />
+		<Unit filename="..\apps\webserver\httpd-fs\cgi\stop_ramp.cgi" />
+		<Unit filename="..\apps\webserver\httpd-fs\cmap.shtml" />
+		<Unit filename="..\apps\webserver\httpd-fs\dig.shtml" />
+		<Unit filename="..\apps\webserver\httpd-fs\footer.html" />
+		<Unit filename="..\apps\webserver\httpd-fs\header.html" />
+		<Unit filename="..\apps\webserver\httpd-fs\index.shtml" />
+		<Unit filename="..\apps\webserver\httpd-fs\map.shtml" />
+		<Unit filename="..\apps\webserver\httpd-fs\netset.shtml" />
+		<Unit filename="..\apps\webserver\httpd-fs\pirset.shtml" />
+		<Unit filename="..\apps\webserver\httpd-fs\style.css" />
+		<Unit filename="..\apps\webserver\httpd-fs\tentry.shtml" />
+		<Unit filename="..\apps\webserver\httpd-fs\tevents.shtml" />
+		<Unit filename="..\apps\webserver\httpd-fs\timeset.shtml" />
+		<Unit filename="..\apps\webserver\httpd-fs\validate.js" />
+		<Unit filename="..\apps\webserver\httpd-fsdata.c">
 			<Option compilerVar="CC" />
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
-		<Unit filename="../ip_avenger/util.h" />
-		<Unit filename="../lib/cgi_utils.c">
+		<Unit filename="..\apps\webserver\httpd-fsdata.h" />
+		<Unit filename="..\apps\webserver\httpd-param.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../lib/cgi_utils.h" />
-		<Unit filename="../lib/lightlib.c">
+		<Unit filename="..\apps\webserver\httpd-param.h" />
+		<Unit filename="..\apps\webserver\httpd.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../lib/lightlib.h" />
-		<Unit filename="../lib/packet_demux.c">
+		<Unit filename="..\apps\webserver\httpd.h" />
+		<Unit filename="..\apps\webserver\makefsdata" />
+		<Unit filename="..\apps\webserver\makestrings" />
+		<Unit filename="..\apps\webserver\webserver.h" />
+		<Unit filename="..\doc\pt-1.4-refman.pdf" />
+		<Unit filename="..\doc\uip-refman.pdf" />
+		<Unit filename="..\driver\CUart.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../lib/packet_demux.h" />
-		<Unit filename="../lib/ramp_ctrl.c">
+		<Unit filename="..\driver\CUart.h" />
+		<Unit filename="..\driver\adc.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../lib/ramp_ctrl.h" />
-		<Unit filename="../pmd/doc/Readme" />
-		<Unit filename="../pthreads/events/actions/absval_mgr.c">
+		<Unit filename="..\driver\adc.h" />
+		<Unit filename="..\driver\comparator.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../pthreads/events/actions/absval_mgr.h" />
-		<Unit filename="../pthreads/events/actions/cycle_mgr.c">
+		<Unit filename="..\driver\comparator.h" />
+		<Unit filename="..\driver\dac.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../pthreads/events/actions/cycle_mgr.h" />
-		<Unit filename="../pthreads/events/core/event_switch.c">
+		<Unit filename="..\driver\dac.h" />
+		<Unit filename="..\driver\dm9000.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../pthreads/events/core/event_switch.h" />
-		<Unit filename="../pthreads/events/core/rule_mgr.c">
+		<Unit filename="..\driver\dm9000.h" />
+		<Unit filename="..\driver\flash.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../pthreads/events/events/adc_event.c">
+		<Unit filename="..\driver\flash.h" />
+		<Unit filename="..\driver\i2c.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../pthreads/events/events/adc_event.h" />
-		<Unit filename="../pthreads/events/events/dig_event.c">
+		<Unit filename="..\driver\i2c.h" />
+		<Unit filename="..\driver\i2c_isr.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../pthreads/events/events/dig_event.h" />
-		<Unit filename="../pthreads/events/events/pir_event.c">
+		<Unit filename="..\driver\if_dm9000.h" />
+		<Unit filename="..\driver\onoff.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../pthreads/events/events/pir_event.h" />
-		<Unit filename="../pthreads/events/events/time_event.c">
+		<Unit filename="..\driver\onoff.h" />
+		<Unit filename="..\driver\rtc.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../pthreads/events/events/time_event.h" />
-		<Unit filename="../pthreads/template/pthread_template.c">
+		<Unit filename="..\driver\rtc.h" />
+		<Unit filename="..\driver\rtc_i2c.h" />
+		<Unit filename="..\driver\rtc_isr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\driver\swtimers.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\driver\swtimers.h" />
+		<Unit filename="..\ip_avenger\clock-arch.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\ip_avenger\clock-arch.h" />
+		<Unit filename="..\ip_avenger\config.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\ip_avenger\fixed_addr.h" />
+		<Unit filename="..\ip_avenger\iet_debug.h" />
+		<Unit filename="..\ip_avenger\main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\ip_avenger\main.h" />
+		<Unit filename="..\ip_avenger\product.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\ip_avenger\product.h" />
+		<Unit filename="..\ip_avenger\system.h" />
+		<Unit filename="..\ip_avenger\util.c">
 			<Option compilerVar="CC" />
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
-		<Unit filename="../pthreads/template/pthread_template.h" />
-		<Unit filename="../uip/clock.h" />
-		<Unit filename="../uip/lc-addrlabels.h" />
-		<Unit filename="../uip/lc-switch.h" />
-		<Unit filename="../uip/lc.h" />
-		<Unit filename="../uip/psock.c">
+		<Unit filename="..\ip_avenger\util.h" />
+		<Unit filename="..\lib\cgi_utils.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../uip/psock.h" />
-		<Unit filename="../uip/pt.h" />
-		<Unit filename="../uip/timer.c">
+		<Unit filename="..\lib\cgi_utils.h" />
+		<Unit filename="..\lib\packet_demux.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../uip/timer.h" />
-		<Unit filename="../uip/uip-conf.h" />
-		<Unit filename="../uip/uip-fw.h" />
-		<Unit filename="../uip/uip-split.h" />
-		<Unit filename="../uip/uip.c">
+		<Unit filename="..\lib\packet_demux.h" />
+		<Unit filename="..\pmd\doc\Readme" />
+		<Unit filename="..\pthreads\events\actions\absval_mgr.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../uip/uip.h" />
-		<Unit filename="../uip/uip_arch.h" />
-		<Unit filename="../uip/uip_arp.c">
+		<Unit filename="..\pthreads\events\actions\absval_mgr.h" />
+		<Unit filename="..\pthreads\events\core\event_switch.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../uip/uip_arp.h" />
-		<Unit filename="../uip/uiplib.c">
+		<Unit filename="..\pthreads\events\core\event_switch.h" />
+		<Unit filename="..\pthreads\events\core\rule_mgr.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../uip/uiplib.h" />
-		<Unit filename="../uip/uipopt.h" />
+		<Unit filename="..\pthreads\events\events\adc_event.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\pthreads\events\events\adc_event.h" />
+		<Unit filename="..\pthreads\events\events\dig_event.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\pthreads\events\events\dig_event.h" />
+		<Unit filename="..\pthreads\events\events\pir_event.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\pthreads\events\events\pir_event.h" />
+		<Unit filename="..\pthreads\events\events\time_event.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\pthreads\events\events\time_event.h" />
+		<Unit filename="..\pthreads\template\pthread_template.c">
+			<Option compilerVar="CC" />
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="..\pthreads\template\pthread_template.h" />
+		<Unit filename="..\uip\clock.h" />
+		<Unit filename="..\uip\lc-addrlabels.h" />
+		<Unit filename="..\uip\lc-switch.h" />
+		<Unit filename="..\uip\lc.h" />
+		<Unit filename="..\uip\psock.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\uip\psock.h" />
+		<Unit filename="..\uip\pt.h" />
+		<Unit filename="..\uip\timer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\uip\timer.h" />
+		<Unit filename="..\uip\uip-conf.h" />
+		<Unit filename="..\uip\uip-fw.h" />
+		<Unit filename="..\uip\uip-split.h" />
+		<Unit filename="..\uip\uip.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\uip\uip.h" />
+		<Unit filename="..\uip\uip_arch.h" />
+		<Unit filename="..\uip\uip_arp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\uip\uip_arp.h" />
+		<Unit filename="..\uip\uiplib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\uip\uiplib.h" />
+		<Unit filename="..\uip\uipopt.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

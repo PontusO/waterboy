@@ -2,75 +2,47 @@
 <script type="text/javascript" src="validate.js"></script>
 <script type="text/javascript">
 <!--
-function validate() {
-var ok=1;
-elem = document.getElementById("idlevel"); if (!isNumOk(elem, 0, 65535)) ok=0;
-elem = document.getElementById("idrampto"); if (!isNumOk(elem, 0, 1000)) ok=0;
-elem = document.getElementById("idrate"); if (!isNumOk(elem, 1, 99999)) ok=0;
-elem = document.getElementById("idstep"); if (!isNumOk(elem, 1, 10)) ok=0;
-elem = document.getElementById("idon"); if (!isNumOk(elem, 1, 60)) ok=0;
-if (!ok) { return doAlert(); }
-return true; }
+function validate()
+{
+  var ok=1;
+  if (!ok) { return doAlert(); }
+  return true;
+}
+
 function setLayer(whichLayer, mode)
 {
-var elem, vis;
-if( document.getElementById ) elem = document.getElementById( whichLayer );
-else if( document.all ) elem = document.all[whichLayer];
-else if( document.layers ) elem = document.layers[whichLayer];
-vis = elem.style;
-if (mode == 'on') vis.display = 'block';
-else vis.display = 'none';
+  var elem, vis;
+
+  if( document.getElementById )
+    elem = document.getElementById( whichLayer );
+  else if( document.all )
+    elem = document.all[whichLayer];
+  else if( document.layers )
+    elem = document.layers[whichLayer];
+
+  vis = elem.style;
+  if (mode == 'on') vis.display = 'block';
+  else vis.display = 'none';
 }
+
 function hideLayers()
-{ setLayer ('abs', 'off'); setLayer ('invalid', 'off');
-setLayer ('ramp', 'off'); setLayer ('cycle', 'off'); }
+{
+  setLayer ('abs', 'off'); setLayer ('invalid', 'off');
+}
 
 function enLayer(layer)
-{ hideLayers();
-if (layer == 'cycle') { setLayer ('ramp', 'on'); setLayer ('cycle', 'on'); return; } else
-if (layer == 'ramp') { setLayer ('ramp', 'on'); setLayer ('cycle', 'off'); return; }
-setLayer (layer, 'on'); }
-
-function ctimeon(obj) {
-elem = document.getElementById("idon");
-if (obj.value==0) elem.disabled=true; else elem.disabled=false; }
-
-function setData (frm) {
-var evt=frm.evt.options[frm.evt.selectedIndex].value;
-var act=frm.act.options[frm.act.selectedIndex].value;
-if (evt != -1 && act != -1) {
-var etype = evt >> 16; var atype = act >> 16;
-if (etype == 1) {
-if (atype == 1) {
-enLayer ('abs');
-} else {
-enLayer ('invalid');
-frm.submit.disabled=true;
-return;
-} } else if (etype == 2) {
-if (atype == 1) {
-enLayer ('abs');
-} else if (atype == 3) {
-enLayer ('cycle');
-} } else if (etype == 3) {
-if (atype == 1) {
-enLayer ('abs');
-} else if (atype == 3) {
-enLayer ('cycle');
-} } else if (etype == 4) {
-if (atype == 1) {
-enLayer ('abs');
-} else if (atype == 3) {
-enLayer ('cycle');
-} }
-frm.submit.disabled=false;
-} else {
-hideLayers();
-frm.submit.disabled=true;
+{
+  hideLayers();
+  setLayer (layer, 'on');
 }
-ctimeon(document.getElementById("idsel"));
+
+function setData (frm)
+{
+  enLayer ('abs');
 }
-window.onload = function() {
+
+window.onload = function()
+{
   var myForm = document.getElementById('mapfrm');
   setData(myForm);
 }
@@ -82,14 +54,14 @@ window.onload = function() {
 <input type="hidden" name="mapx" value="%! get-int 2
 "><center>
 <div><table width="90%" class="mytab"><col style="width:40%" />
-<tr><td>Enabled</td><td><input type="checkbox" name="mapenabled"%! get-check 1
+<tr><td>Aktiv</td><td><input type="checkbox" name="mapenabled"%! get-check 1
 ></td></tr>
-<tr><td>Select Event provider</td><td>
+<tr><td>Välj händelse</td><td>
 <select name="evt" onchange="setData(this.form);">
 <option value="-1">(Select an event provider)</option>%! get-evntfuncs 0
 </select>
 </td></tr>
-<tr><td>Select Action Manager</td><td>
+<tr><td>Välj jobb</td><td>
 <select name="act" onchange="setData(this.form);">
 <option value="-1">(Select an action manager)</option>%! get-evntfuncs 1
 </select>
@@ -98,32 +70,11 @@ window.onload = function() {
 
 <div id="abs" style="display:none">
 <hr color="#258D92" size="2" width="90%"><table width="90%" class="mytab">
-<col style="width:40%" /><tr><td>Output Channel</td><td><select name="achannel">%! get-option 1
+<col style="width:40%" /><tr><td>Ventilkanal</td><td><select name="achannel">%! get-option 1
 </select></td></tr>
-<tr><td>Output Level Preset (0-65535)</td><td><input type="text" id="idlevel" name="level" size="6" maxlength="5" value="%! get-int 6
-"></td></tr>
-</table>
-</div>
-
-<div id="ramp" style="display:none">
-<hr color="#258D92" size="2" width="90%"><table width="90%" class="mytab">
-<col style="width:40%" /><tr><td>Output Channel</td><td><select name="channel">%! get-option 2
+<tr><td>Sätt ventilen i läge</td><td><select name="onoff">%! get-option 2
 </select></td></tr>
-<tr><td>Ramp Mode</td><td><select name="rmode" id="idsel" onchange="ctimeon(this);">%! get-option 5
-</select></td></tr>
-<tr><td>Ramp to Level (0-1000)</td><td><input type="text" id="idrampto" name="rampto" size="4" maxlength="4" value="%! get-int 7
-"></td></tr>
-<tr><td>Ramp Rate (1-99999)</td><td><input type="text" id="idrate" name="rate" size="5" maxlength="5" value="%! get-int 8
-"> Number of ticks per increment.</td></tr>
-<tr><td>Ramp Step (1-10)</td><td><input type="text" id="idstep" name="step" size="2" maxlength="2" value="%! get-int 9
-"> Number of steps each increment.</td></tr>
-</table>
-</div>
-
-<div id="cycle" style="display:none">
-<table width="90%" class="mytab">
-<col style="width:40%" /><tr><td>On Time (1-60 minutes)</td><td><input type="text" id="idon" name="timeon" size="3" maxlength="2" value="%! get-int 20
-" disabled></td></tr>
+<tr><td>Bevattningstid (i minuter)</td><td><input type="text" name="wtime" size="5" maxlength="4" value="60"></td></tr>
 </table>
 </div>
 

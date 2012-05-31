@@ -71,7 +71,6 @@ void Timer0_ISR (void) __interrupt TF0_VECTOR;
 extern void SMBus_ISR (void) __interrupt SMB0_VECTOR;
 extern void rtc_isr(void) __interrupt TF3_VECTOR;
 void ADC_ISR (void) __interrupt AD0INT_VECTOR __using 2;
-void PCA_ISR (void) __interrupt PCA_VECTOR __using 2;
 
 extern timer_cb timer_cbs[NUMBER_OF_SWTIMERS];
 

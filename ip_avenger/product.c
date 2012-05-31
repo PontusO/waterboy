@@ -41,21 +41,17 @@
 #include "adc.h"
 #include "i2c.h"
 #include "rtc.h"
-#include "pca.h"
 #include "comparator.h"
 #include "dac.h"
 #include "httpd-cgi.h"
 #include "product.h"
-#include "ramp_ctrl.h"
 #include "but_mon.h"
 #include "absval_mgr.h"
-#include "cycle_mgr.h"
 #include "event_switch.h"
 #include "adc_event.h"
 #include "time_event.h"
 #include "pir_event.h"
 #include "dig_event.h"
-#include "lightlib.h"
 
 extern static u16_t half_Sec;
 extern static u16_t ten_Secs;
@@ -76,8 +72,6 @@ void Timer0_Init (void);
 /*
  * Protothread instance data
  */
-cycle_mgr_t     cycle_mgr[CFG_NUM_PWM_DRIVERS];
-ramp_ctrl_t     ramp_ctrl[CFG_NUM_PWM_DRIVERS];
 event_thread_t  event_thread;
 adc_event_t     adc_event;
 time_event_t    time_event;
@@ -106,9 +100,6 @@ void pmd(void) __banked
 
   sys_uart_init(BAUD_115200);  // Init the system print uart
   init_i2c();
-
-  /* Initialize LED brightnes controller */
-  init_pca(PCA_MODE_PWM_16, PCA_SYS_CLK);
 
   /* Initialize the ADC and ADC ISR */
   adc_init();
@@ -143,9 +134,6 @@ void pmd(void) __banked
   TX_EventPending = FALSE;	// False to poll the DM9000 receive hardware
   ARP_EventPending = FALSE;	// clear the arp timer event flag
 
-  /* Initialize the LED pwm control library */
-  init_ledlib();
-
   EA = TRUE;                // Enable interrupts
 
   A_(printf("\n");)
@@ -178,14 +166,6 @@ void pmd(void) __banked
   /* The event switch must be initialized before event providers and action mgrs. */
   init_event_switch(&event_thread);
   /* Initialize all pwm ramp managers */
-  for (i=0; i<CFG_NUM_PWM_DRIVERS; i++) {
-    /* The on off cycle manager */
-    cycle_mgr[i].cdata.channel = i;
-    init_cycle_mgr (&cycle_mgr[i]);
-    /* The actual ramp controllers */
-    ramp_ctrl[i].channel = i;
-    init_ramp_ctrl (&ramp_ctrl[i]);
-  }
   /* Event action managers */
   init_absval_mgr();
 
@@ -311,10 +291,6 @@ void pmd(void) __banked
     PT_SCHEDULE(handle_kicker(&kicker));
     PT_SCHEDULE(handle_time_client(&tc));
     /* Event action managers */
-    for (i=0; i<CFG_NUM_PWM_DRIVERS; i++) {
-      PT_SCHEDULE(handle_cycle_mgr(&cycle_mgr[i]));
-      PT_SCHEDULE(handle_ramp_ctrl(&ramp_ctrl[i]));
-    }
     /* Event providers */
     PT_SCHEDULE(handle_adc_event(&adc_event));
     PT_SCHEDULE(handle_pir_event(&pir_event));

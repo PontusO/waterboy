@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Pontus Oldberg.
+ * Copyright (c) 2012, Pontus Oldberg.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,31 +27,46 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#ifndef PCA_H_INCLUDED
-#define PCA_H_INCLUDED
 
-#define PCA_MAX_CHANNELS  4
+#include "system.h"
+#include "onoff.h"
 
-#define PCA_CHANNEL0      0
-#define PCA_CHANNEL1      1
-#define PCA_CHANNEL2      2
-#define PCA_CHANNEL3      3
+void init_onoff (void)
+{
+  /*
+   * Not much to do here really, all digital outputs are already
+   * setup in config.c
+   */
+}
 
-#define PCA_MODE_PCAP     1
-#define PCA_MODE_NCAP     2
-#define PCA_MODE_BCAP     3
-#define PCA_MODE_PWM_8    0x00
-#define PCA_MODE_PWM_16   0x80
+char set_onoff (u8_t channel, u8_t value)
+{
+   /* Invert the value since the hw have an inverter as a mosfet driver */
+  value = value ? 0 : 1;
 
-#define PCA_SYS_CLK_DIV12 0
-#define PCA_SYS_CLK_DIV4  1
-#define PCA_TIMER0_OVFL   2
-#define PCA_ECI_HI_TO_LOW 3
-#define PCA_SYS_CLK       4
-#define PCA_EXT_CLK_DIV8  5
-#define PCA_CLK_SHIFT     1
-
-void init_pca(unsigned char mode, unsigned char clock);
-char set_pca_duty (unsigned char channel, unsigned int duty);
-
-#endif // PCA_H_INCLUDED
+  switch (channel)
+  {
+    case 0:
+      P0_4 = value;
+      break;
+    case 1:
+      P1_0 = value;
+      break;
+    case 2:
+      P1_1 = value;
+      break;
+    case 3:
+      P1_2 = value;
+      break;
+    case 4:
+      P1_3 = value;
+      break;
+    case 5:
+      P1_4 = value;
+      break;
+    default:
+      return -1;
+      break;
+  }
+  return 0;
+}

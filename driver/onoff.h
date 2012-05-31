@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Pontus Oldberg.
+ * Copyright (c) 2012, Pontus Oldberg.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,39 +27,15 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#ifndef RAMP_MGR_H_INCLUDED
-#define RAMP_MGR_H_INCLUDED
+#ifndef ONOFF_H_INCLUDED
+#define ONOFF_H_INCLUDED
 
-#include "pt.h"
-#include "ramp_ctrl.h"
+void init_onoff (void);
+char set_onoff (u8_t channel, u8_t value);
 
-#define RAMP_CMD_RESET  0x00
-#define RAMP_CMD_START  0x01
-#define RAMP_CMD_STOP   0x02
+enum {
+  RELAY_OFF = 0,
+  RELAY_ON = 1
+} relay_state;
 
-/*
- * This data structure defines the data required by this action manager.
- */
-typedef struct {
-  char channel;
-  unsigned char rampto;
-  u16_t rate;
-  unsigned char step;
-} act_ramp_data_t;
-
-typedef struct {
-  struct pt pt;
-  ramp_ctrl_t *rctrl;
-  u8_t channel;
-  u8_t signal;
-  char intensity;
-  char rampto;
-  char step;
-  u16_t rate;
-} ramp_mgr_t;
-
-void init_ramp_mgr(ramp_mgr_t *rmgr) __reentrant __banked;
-ramp_mgr_t *get_ramp_mgr (u8_t channel) __reentrant __banked;
-PT_THREAD(handle_ramp_mgr(ramp_mgr_t *rmgr) __reentrant __banked);
-
-#endif // RAMP_MGR_H_INCLUDED
+#endif // ONOFF_H_INCLUDED

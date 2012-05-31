@@ -28,20 +28,20 @@
  *
  */
 #pragma codeseg APP_BANK
-//#define PRINT_A     // Enable A prints
+#define PRINT_A     // Enable A prints
 
 #include "system.h"
+#include "onoff.h"
 #include "iet_debug.h"
 #include "absval_mgr.h"
 #include "event_switch.h"
-#include "lightlib.h"
 
 /* Function prototypes */
 void absval_trigger (struct rule *rule);
 
 /* The action manager handle */
 static action_mgr_t  absvalmgr;
-static const char *absval_name = "Set absolute light level";
+static const char *absval_name = "Styr vattenventil";
 
 /*
  * Initialize the absval_mgr
@@ -61,25 +61,13 @@ void init_absval_mgr(void) __reentrant __banked
 /* Set new data */
 void absval_trigger (struct rule *rule) __reentrant
 {
-  ld_param_t led_params;
   act_absolute_data_t *absdata = (act_absolute_data_t *)rule->action_data;
   rule_data_t *rdata = rule->r_data;
 
-  led_params.channel = absdata->channel-1;
+  set_onoff (absdata->channel-1, absdata->value);
 
-  /* First, stop any ramping action going on on this channel */
-  cycle_mgr_stop_channel (led_params.channel);
-
-  /* Get value based on what the caller wanted */
-  if (rdata->command == EVENT_USE_FIXED_DATA)
-    led_params.level_absolute = absdata->value;
-  else if (rdata->command == EVENT_USE_DYNAMIC_DATA)
-    led_params.level_absolute = rdata->adata;
-
-  A_(printf(__AT__ "Setting: Channel %d, Value %d\n", (int)led_params.channel,
-          led_params.level_absolute);)
-
-  ledlib_set_light_abs (&led_params);
+  A_(printf(__AT__ "Setting: Channel %d, Value %d\n", absdata->channel-1,
+          absdata->value);)
 }
 
 /* EOF */

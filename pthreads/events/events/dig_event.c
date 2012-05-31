@@ -150,15 +150,6 @@ void switch_light (event_prv_t *ptr, u8_t state) __reentrant
       break;
     }
 
-    case ATYPE_CYCLE_ACTION:
-      /* If it's a cycle just send a start trigger with our own command */
-      if (!((cycle_mgr_get_state (channel) == CYCLE_STATE_DORMANT)
-             && !state)) {
-        rp->r_data->command = EVENT_USE_CONTINUE;
-        rule_send_event_signal (ptr);
-      }
-      break;
-
     default:
       A_(printf (__AT__ "Incorrect action manager !\n");)
       break;

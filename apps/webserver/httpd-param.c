@@ -148,7 +148,6 @@ static const struct parameter_table parmtab[] = {
   PARAM_ENTRY("channel", cgi_set_channel),
   PARAM_ENTRY("achannel", cgi_set_achannel),
   PARAM_ENTRY("level", cgi_set_level),
-  PARAM_ENTRY("rampto", cgi_set_rampto),
   PARAM_ENTRY("rate", cgi_set_rate),
   PARAM_ENTRY("step", cgi_set_step),
   PARAM_ENTRY("timeon", cgi_set_timeon),
@@ -707,16 +706,6 @@ PARAM_FUNC (cgi_set_level)
   if (NEOP(*buffer)) {
     s->parms.level = atoi(buffer);
     s->parms.level_updated = 1;
-    s->parms.num_parms++;
-  }
-}
-/*---------------------------------------------------------------------------*/
-PARAM_FUNC (cgi_set_rampto)
-{
-  buffer = skip_to_char(buffer, '=');
-  if (NEOP(*buffer)) {
-    s->parms.rampto = atoi(buffer);
-    s->parms.rampto_updated = 1;
     s->parms.num_parms++;
   }
 }
