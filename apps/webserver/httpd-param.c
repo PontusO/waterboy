@@ -151,6 +151,7 @@ static const struct parameter_table parmtab[] = {
   PARAM_ENTRY("rate", cgi_set_rate),
   PARAM_ENTRY("step", cgi_set_step),
   PARAM_ENTRY("timeon", cgi_set_timeon),
+  PARAM_ENTRY("onoff", cgi_set_onoff),
     /* This is the last parameter in the list of html parameters.
      * It's used to trigger the real flash save function
      */
@@ -745,6 +746,13 @@ PARAM_FUNC (cgi_set_timeon)
   buffer = skip_to_char(buffer, '=');
   if (NEOP(*buffer))
     s->parms.timeon = atoi(buffer);
+}
+/*---------------------------------------------------------------------------*/
+PARAM_FUNC (cgi_set_onoff)
+{
+  buffer = skip_to_char(buffer, '=');
+  if (NEOP(*buffer))
+    s->parms.onoff = atoi(buffer);
 }
 
 /*---------------------------------------------------------------------------*/

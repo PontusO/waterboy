@@ -18,15 +18,15 @@ window.onload = function() {
 //-->
 </script>
 <center>
-<h1>Digital Input Settings</h1><hr color="#258D92" size="2" width="90%">
+<h1>Inställningar för manöverknappar</h1><hr color="#258D92" size="2" width="90%">
 <form onsubmit="return validate();"><input type="hidden" name="digclr"><center><table width="90%" class="mytab">
-<tr><td>Digital Input 1 Mode</td><td><select name="in1m" id="sl1" onchange="check(this, 'ch1');">%! get-option 3
+<tr><td>Manöverknapp 1, typ</td><td><select name="in1m" id="sl1" onchange="check(this, 'ch1');">%! get-option 3
 </select></td></tr>
-<tr><td>Invert Input Signal 1</td><td><input type="checkbox" id="ch1" name="in1s" %! get-check 4
+<tr><td>Inverterad funktion</td><td><input type="checkbox" id="ch1" name="in1s" %! get-check 4
 ></td></tr>
-<tr><td>Digital Input 2 Mode</td><td><select name="in2m" id="sl2" onchange="check(this, 'ch2');">%! get-option 4
+<tr><td>Manöverknapp 2, typ</td><td><select name="in2m" id="sl2" onchange="check(this, 'ch2');">%! get-option 4
 </select></td></tr>
-<tr><td>Invert Input Signal 2</td><td><input type="checkbox" id="ch2" name="in2s" %! get-check 5
+<tr><td>Inverterad funktion</td><td><input type="checkbox" id="ch2" name="in2s" %! get-check 5
 ></td></tr>
 </table></center>
 <hr color="#258D92" size="2" width="90%"><br>

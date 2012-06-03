@@ -88,7 +88,7 @@
 #ifndef EVENT_SWITCH_H_INCLUDED
 #define EVENT_SWITCH_H_INCLUDED
 
-#include "adc_event.h"
+#include "moist_event.h"
 #include "absval_mgr.h"
 
 #define MAX_NR_ACTION_MGRS      5

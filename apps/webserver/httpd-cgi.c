@@ -556,46 +556,13 @@ PT_THREAD(get_int(struct httpd_state *s, char *ptr) __reentrant)
       intno = 1;
       break;
 
-      /* Retrieve the alevel value in cmap.shtml */
+    /* Get onoff value on cmap.shtml page */
     case 6:
       intno = 1;
       if (s->parms.modify)
-        myint = s->parms.rp->action_data.abs_data.value;
+        myint = s->parms.rp->action_data.abs_data.onoff;
       else
         myint = 0;
-      break;
-
-      /* Retrieve the rampto value on page cmap.shtml */
-    case 7:
-      intno = 1;
-      if (s->parms.modify) {
-        myint = SP;
-        /* Sanity check */
-        if (myint > 1000) myint = 1000;
-      } else
-        myint = 0;
-      break;
-
-      /* Retrieve the rate value on page cmap.shtml */
-    case 8:
-      intno = 1;
-      if (s->parms.modify) {
-//        myint = s->parms.rp->action_data.cycle_data.rate;
-        /* Sanity check */
-//        if (myint < 1 || myint > 99999) myint = 1;
-      } else
-        myint = 1;
-      break;
-
-      /* Retrieve the step value on page cmap.shtml */
-    case 9:
-      intno = 1;
-      if (s->parms.modify) {
-//        myint = s->parms.rp->action_data.cycle_data.step;
-        /* Sanity check */
-//        if (myint < 1 || myint > 10) myint = 1;
-      } else
-        myint = 1;
       break;
 
     case 10:
@@ -611,12 +578,11 @@ PT_THREAD(get_int(struct httpd_state *s, char *ptr) __reentrant)
       /* Retrieve the timeon value on page cmap.shtml */
     case 20:
       intno = 1;
-      if (s->parms.modify) {
-//        myint = s->parms.rp->action_data.cycle_data.time;
-        /* Sanity check */
-//        if (myint < 1 || myint > 60) myint = 1;
-      } else
-        myint = 1;
+      if (s->parms.modify)
+        myint = s->parms.rp->action_data.abs_data.timeon;
+      else
+        /* Default value */
+        myint = 60;
       break;
 
   }
@@ -631,13 +597,10 @@ PT_THREAD(get_int(struct httpd_state *s, char *ptr) __reentrant)
 }
 
 static const char const *inmodes[] = {
-  "Single Throw (Toggle)", "Dual Throw (Switch)"
-};
-static const char const *rmodes[] = {
-  "Single Ramp", "Dual Ramp"
+  "Tryckknapp", "Vippknapp"
 };
 static const char const *txt_onoff[] = {
-  "På", "Av"
+  "Av", "På"
 };
 /*---------------------------------------------------------------------------*/
 static
@@ -673,8 +636,9 @@ PT_THREAD(get_option(struct httpd_state *s, char *ptr) __reentrant)
       s->j = 0;
       for (s->i=0; s->i<2; s->i++) {
         s->j += sprintf((char*)uip_appdata+s->j, "<option value=\"%d\"%s>%s",
-                        s->i, (sys_cfg.in1_mode == s->i) ? " selected" : "",
-                        txt_onoff[s->i]);
+                        s->i, (s->parms.modify &&
+                        s->parms.rp->action_data.abs_data.onoff == s->i) ?
+                        " selected" : "", txt_onoff[s->i]);
       }
     }
     break;

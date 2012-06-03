@@ -32,6 +32,7 @@
 #define absval_mgr_H_INCLUDED
 
 #include "pt.h"
+#include "system.h"
 
 /*
  * This data structure defines the data required by this action manager.
@@ -40,7 +41,8 @@
  */
 typedef struct act_absolute_data_s {
   char channel;
-  u16_t value;
+  u8_t onoff;
+  unsigned long timeon;
 } act_absolute_data_t;
 
 void init_absval_mgr(void) __reentrant __banked;

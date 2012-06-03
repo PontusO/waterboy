@@ -57,6 +57,7 @@ struct cgi_parameters {
   u8_t step;
   u8_t step_updated;
   unsigned int timeon;
+  u8_t onoff;
   u8_t num_parms;
   time_spec_t *ts;        /* Pointer to a time spec structure */
   u8_t ts_index;          /* Index if time spec structure */

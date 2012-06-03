@@ -137,7 +137,7 @@ void Timer0_ISR (void) __interrupt TF0_VECTOR __using 0
   /* Count all used sw timers down by one */
   for(tmcnt=0 ; tmcnt<NUMBER_OF_SWTIMERS ; tmcnt++)
   {
-    if (!timer_table[tmcnt])
+    if (timer_table[tmcnt] == TMR_RUNNING)
     {
       swtimer[tmcnt]--;
       if (!swtimer[tmcnt])

@@ -30,6 +30,7 @@
 
 #include "system.h"
 #include "onoff.h"
+#include "iet_debug.h"
 
 void init_onoff (void)
 {

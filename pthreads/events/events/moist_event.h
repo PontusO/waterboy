@@ -28,8 +28,8 @@
  *
  */
 
-#ifndef adc_event_H_INCLUDED
-#define adc_event_H_INCLUDED
+#ifndef moist_event_H_INCLUDED
+#define moist_event_H_INCLUDED
 
 #include "pt.h"
 #include "absval_mgr.h"
@@ -38,7 +38,7 @@
 #define CFG_NUM_POTS    4
 
 /*
- * Data types used by the adc_event
+ * Data types used by the moist_event
  */
 typedef struct {
   unsigned char channel;    /* Potentiometer channel */
@@ -50,9 +50,9 @@ typedef struct {
   int pot_val;
   struct rule_data_s *rdata;
   int prev_pot_val[CFG_NUM_POTS];
-} adc_event_t;
+} moist_event_t;
 
-void init_adc_event(adc_event_t *adc_event) __reentrant __banked;
-PT_THREAD(handle_adc_event(adc_event_t *adc_event) __reentrant __banked);
+void init_moist_event(moist_event_t *moist_event) __reentrant __banked;
+PT_THREAD(handle_moist_event(moist_event_t *moist_event) __reentrant __banked);
 
-#endif // adc_event_H_INCLUDED
+#endif // moist_event_H_INCLUDED

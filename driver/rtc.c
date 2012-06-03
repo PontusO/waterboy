@@ -590,7 +590,7 @@ PT_THREAD(handle_time_client(struct time_client *tc) __reentrant __banked)
     if (sys_cfg.enable_time && tc->do_update) {
       /* Wait for 4 seconds before processing request */
       tc->timer = alloc_timer();
-      set_timer(tc->timer, 400, NULL);
+      set_timer(tc->timer, 400, NULL, NULL);
       PT_WAIT_UNTIL(&tc->pt, get_timer(tc->timer) == 0);
       free_timer(tc->timer);
 

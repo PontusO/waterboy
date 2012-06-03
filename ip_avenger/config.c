@@ -88,7 +88,7 @@ void config() {
 //-----------------------------------------------------------------------------
 
   // Configure the XBRn Registers
-  XBR0	= 0x21;	// Enable I2C for RTC and PWM ctrl + CEX0 - CEX3
+  XBR0	= 0x01;	// Enable SMBUS and UART1
   XBR1	= 0x00;
   XBR2	= 0x46; // Enable Crossbar/weak pups, EMIF on low ports, UART1 for RS485
 
@@ -109,9 +109,8 @@ void config() {
   /* This makes all inputs pulled high and all outputs set to high */
   P0 = 0xFF;
   /*
-   * Pull all keyboard inputs high %X1111000 and set all others to low
-   */
-  P1 = 0xF8;
+   * Pull all digital inputs and outputs high. */
+  P1 = 0xFF;
 //-----------------------------------------------------------------------------
 // EMIF_Init
 //-----------------------------------------------------------------------------

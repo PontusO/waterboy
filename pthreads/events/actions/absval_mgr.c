@@ -35,6 +35,7 @@
 #include "iet_debug.h"
 #include "absval_mgr.h"
 #include "event_switch.h"
+#include "swtimers.h"
 
 /* Function prototypes */
 void absval_trigger (struct rule *rule);
@@ -43,31 +44,61 @@ void absval_trigger (struct rule *rule);
 static action_mgr_t  absvalmgr;
 static const char *absval_name = "Styr vattenventil";
 
+/* Timer table */
+static u8_t timetab[NUMBER_OF_RELAYS];
+
 /*
  * Initialize the absval_mgr
  */
 void init_absval_mgr(void) __reentrant __banked
 {
+  int i;
+
   absvalmgr.base.type = EVENT_ACTION_MANAGER;
   absvalmgr.base.name = action_base_name_onoff;
   absvalmgr.type = ATYPE_ABSOLUTE_ACTION;
   absvalmgr.action_name = (char*)absval_name;
   absvalmgr.vt.trigger_action = absval_trigger;
 
-  /* register this non threaded action manager */
+  /* Initialize timers */
+  for (i=0;i<NUMBER_OF_RELAYS;i++) {
+    timetab[i] = alloc_timer();
+  }
+  /* register this action manager */
   evnt_register_handle(&absvalmgr);
+}
+
+/* Callback function for the timeout timer */
+void absval_callback (void *cb_data)
+{
+  act_absolute_data_t *absdata = (act_absolute_data_t *)cb_data;
+
+  /* So we should reset the relay at this point.
+   * We do this by appying the inverse value of what is was set to.
+   */
+  set_onoff (absdata->channel-1, absdata->onoff ? 0 : 1);
+  A_(printf(__AT__ "Got timer callback on channel %d\n", absdata->channel);)
 }
 
 /* Set new data */
 void absval_trigger (struct rule *rule) __reentrant
 {
   act_absolute_data_t *absdata = (act_absolute_data_t *)rule->action_data;
-  rule_data_t *rdata = rule->r_data;
+  u8_t channel = absdata->channel-1;
+  u8_t timer = timetab[channel];
 
-  set_onoff (absdata->channel-1, absdata->value);
-
-  A_(printf(__AT__ "Setting: Channel %d, Value %d\n", absdata->channel-1,
-          absdata->value);)
+  /* Check if timer is already running */
+  if (get_timer_status (timer) == TMR_RUNNING ||
+      get_timer_status (timer) == TMR_PAUSED) {
+    /* If the timer is already running, simply renew the time */
+    set_timer_cnt(timer, absdata->timeon * 100);
+  } else {
+    /* Set the output and start the associated timer */
+    set_onoff (channel, absdata->onoff);
+    /* Start timer and set callback */
+    set_timer (timetab[channel], absdata->timeon * 100, absval_callback, absdata);
+    A_(printf(__AT__ "Setting: Channel %d, Value %d\n", channel, absdata->onoff);)
+  }
 }
 
 /* EOF */

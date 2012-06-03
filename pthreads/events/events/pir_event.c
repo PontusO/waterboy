@@ -92,7 +92,7 @@ static void allocate_hw (pir_event_t *pir_event)
   }
   /* Set up a timer to wait for the dac and comparator to settle */
   pir_event->tmr = alloc_timer();
-  set_timer(pir_event->tmr, 200, NULL);
+  set_timer(pir_event->tmr, 200, NULL, NULL);
 }
 
 /*
@@ -143,7 +143,7 @@ again:
     A_(printf(__AT__ " PIR sensor triggered !\n");)
 
     /* Set and restart timer */
-    set_timer (pir_event->ltmr, sys_cfg.pir_lockout * 100, NULL);
+    set_timer (pir_event->ltmr, sys_cfg.pir_lockout * 100, NULL, NULL);
 
     /* Send the signal */
     rule_send_event_signal (&pirevent);

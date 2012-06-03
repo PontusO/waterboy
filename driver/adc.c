@@ -31,7 +31,6 @@
 #include <stdio.h>
 #include <system.h>
 #include <string.h>
-#include <pca.h>
 
 #include "adc.h"
 #include "iet_debug.h"

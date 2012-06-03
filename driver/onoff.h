@@ -30,6 +30,8 @@
 #ifndef ONOFF_H_INCLUDED
 #define ONOFF_H_INCLUDED
 
+#define NUMBER_OF_RELAYS    6
+
 void init_onoff (void);
 char set_onoff (u8_t channel, u8_t value);
 

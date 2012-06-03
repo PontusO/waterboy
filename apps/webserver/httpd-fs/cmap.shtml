@@ -38,7 +38,12 @@ function enLayer(layer)
 
 function setData (frm)
 {
-  enLayer ('abs');
+  var evt=frm.evt.options[frm.evt.selectedIndex].value;
+  var act=frm.act.options[frm.act.selectedIndex].value;
+  if (evt != -1 && act != -1) {
+    frm.submit.disabled=false;
+    enLayer ('abs');
+  }
 }
 
 window.onload = function()
@@ -74,7 +79,8 @@ window.onload = function()
 </select></td></tr>
 <tr><td>Sätt ventilen i läge</td><td><select name="onoff">%! get-option 2
 </select></td></tr>
-<tr><td>Bevattningstid (i minuter)</td><td><input type="text" name="wtime" size="5" maxlength="4" value="60"></td></tr>
+<tr><td>Bevattningstid (i minuter)</td><td><input type="text" name="timeon" size="5" maxlength="4" value="%! get-int 20
+"></td></tr>
 </table>
 </div>
 

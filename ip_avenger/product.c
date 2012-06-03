@@ -41,6 +41,7 @@
 #include "adc.h"
 #include "i2c.h"
 #include "rtc.h"
+#include "onoff.h"
 #include "comparator.h"
 #include "dac.h"
 #include "httpd-cgi.h"
@@ -48,7 +49,7 @@
 #include "but_mon.h"
 #include "absval_mgr.h"
 #include "event_switch.h"
-#include "adc_event.h"
+#include "moist_event.h"
 #include "time_event.h"
 #include "pir_event.h"
 #include "dig_event.h"
@@ -73,7 +74,7 @@ void Timer0_Init (void);
  * Protothread instance data
  */
 event_thread_t  event_thread;
-adc_event_t     adc_event;
+moist_event_t     moist_event;
 time_event_t    time_event;
 pir_event_t     pir_event;
 dig_event_t     dig_event;
@@ -109,6 +110,9 @@ void pmd(void) __banked
 
   /* Initialize the dac driver */
   init_dacs();
+
+  /* Relay channels */
+  init_onoff();
 
   /* ****************** Initialize libraries *******************/
   /* Initialise the uIP TCP/IP stack. */
@@ -170,7 +174,7 @@ void pmd(void) __banked
   init_absval_mgr();
 
   /* Event providers */
-  init_adc_event(&adc_event);
+  init_moist_event(&moist_event);
   /* Time events */
   init_time_event (&time_event);
   /* PIR events */
@@ -292,7 +296,7 @@ void pmd(void) __banked
     PT_SCHEDULE(handle_time_client(&tc));
     /* Event action managers */
     /* Event providers */
-    PT_SCHEDULE(handle_adc_event(&adc_event));
+    PT_SCHEDULE(handle_moist_event(&moist_event));
     PT_SCHEDULE(handle_pir_event(&pir_event));
     PT_SCHEDULE(handle_dig_event(&dig_event));
     PT_SCHEDULE(handle_time_event(&time_event));

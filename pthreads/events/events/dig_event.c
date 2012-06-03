@@ -97,7 +97,7 @@ static void toggle_light (event_prv_t *ptr) __reentrant
       if (rp->r_data->adata)
         rp->r_data->adata = 0;
       else
-        rp->r_data->adata = rp->action_data.abs_data.value;
+        rp->r_data->adata = rp->action_data.abs_data.onoff;
 
       B_(printf (__AT__ "Sending toggle event %d, %d !\n",
                  channel, rp->r_data->adata);)
@@ -139,7 +139,7 @@ void switch_light (event_prv_t *ptr, u8_t state) __reentrant
     case ATYPE_ABSOLUTE_ACTION:
     {
       if (state)
-        rp->r_data->adata = rp->action_data.abs_data.value;
+        rp->r_data->adata = rp->action_data.abs_data.onoff;
       else
         rp->r_data->adata = 0;
 
@@ -187,7 +187,7 @@ again:
     /* Store the current state */
     dig_event->state = BUTTON_PORT & ALL_BUTTONS_MASK;
     /* key debounce */
-    set_timer (dig_event->tmr, DEBOUNCE_TIME, NULL);
+    set_timer (dig_event->tmr, DEBOUNCE_TIME, NULL, NULL);
     PT_WAIT_UNTIL (&dig_event->pt, get_timer (dig_event->tmr) == 0);
     /* Now check that the state is the same */
     if (dig_event->state != (BUTTON_PORT & ALL_BUTTONS_MASK)) {
@@ -217,7 +217,7 @@ again:
           PT_WAIT_WHILE (&dig_event->pt, ((BUTTON_PORT & dig_event->mask) ==
              (dig_event->state & dig_event->mask)));
           /* key debounce */
-          set_timer (dig_event->tmr, DEBOUNCE_TIME, NULL);
+          set_timer (dig_event->tmr, DEBOUNCE_TIME, NULL, NULL);
           PT_WAIT_UNTIL (&dig_event->pt, get_timer (dig_event->tmr) == 0);
         } else if (dig_event->dptr[dig_event->i].mode == BUTTON_SWITCH_MODE) {
           /* Switch light according to switch state */

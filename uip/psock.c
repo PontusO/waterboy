@@ -37,8 +37,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "uipopt.h"
-#include "psock.h"
 #include "uip.h"
 #include "iet_debug.h"
 

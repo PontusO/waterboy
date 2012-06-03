@@ -176,7 +176,8 @@ void x_set_wcmd(util_param_t *param) __reentrant __banked
             /* Add new case statement for every new action manager */
             case ATYPE_ABSOLUTE_ACTION:
               param->s->parms.rp->action_data.abs_data.channel = param->s->parms.achannel;
-              param->s->parms.rp->action_data.abs_data.value = param->s->parms.level;
+              param->s->parms.rp->action_data.abs_data.onoff = param->s->parms.onoff;
+              param->s->parms.rp->action_data.abs_data.timeon = param->s->parms.timeon;
               break;
 
             default:

@@ -38,6 +38,7 @@
 timer_time_t swtimer[NUMBER_OF_SWTIMERS];
 u8_t  timer_table[NUMBER_OF_SWTIMERS];
 timer_cb timer_cbs[NUMBER_OF_SWTIMERS];
+void *cb_data[NUMBER_OF_SWTIMERS];
 
 struct kicker kicker;
 
@@ -100,7 +101,7 @@ char alloc_timer(void)
           case TMR_ALLOCATED:
             putchar('A');
             break;
-          case TMR_STOPPED:
+          case TMR_PAUSED:
             putchar('S');
             break;
           case TMR_KICK:
@@ -154,7 +155,7 @@ u8_t free_timer(u8_t timer)
         case TMR_ALLOCATED:
           putchar('A');
           break;
-        case TMR_STOPPED:
+        case TMR_PAUSED:
           putchar('S');
           break;
         case TMR_KICK:
@@ -180,7 +181,7 @@ u8_t free_timer(u8_t timer)
  * If callbacks are not to be used, this must be set to NULL
  * The timer is started immediatly before returning
  */
-void set_timer(u8_t timer, timer_time_t time, timer_cb cb)
+void set_timer(u8_t timer, timer_time_t time, timer_cb cb, void *cbd)
 {
   if (timer >= NUMBER_OF_SWTIMERS) {
     A_(printf (__AT__ " Requested timer exceeded max number of timers !\n");)
@@ -190,6 +191,7 @@ void set_timer(u8_t timer, timer_time_t time, timer_cb cb)
   ET0 = INTERRUPT_OFF;
   swtimer[timer] = time;
   timer_cbs[timer] = cb;
+  cb_data[timer] = cbd;
   timer_table[timer] = TMR_RUNNING;
   ET0 = INTERRUPT_ON;
 }
@@ -199,11 +201,11 @@ void set_timer(u8_t timer, timer_time_t time, timer_cb cb)
  */
 void set_timer_cnt(u8_t timer, timer_time_t time)
 {
+  ET0 = INTERRUPT_OFF;
   if (timer >= NUMBER_OF_SWTIMERS) {
     A_(printf (__AT__ " Requested timer exceeded max number of timers !\n");)
     return;
   }
-  ET0 = INTERRUPT_OFF;
   swtimer[timer] = time;
   ET0 = INTERRUPT_ON;
 }
@@ -232,25 +234,31 @@ timer_time_t get_timer(u8_t timer)
  */
 u8_t get_timer_status(u8_t timer)
 {
+  u8_t status;
+
+  ET0 = INTERRUPT_OFF;
   if (timer >= NUMBER_OF_SWTIMERS) {
     A_(printf (__AT__ " Requested timer exceeded max number of timers !\n");)
     return TMR_ERROR;
   }
-  return timer_table[timer];
+  status = timer_table[timer];
+  ET0 = INTERRUPT_ON;
+
+  return status;
 }
 
 /*
- * Stop the timer from counting down
+ * Pause the timer from counting down
  */
-void stop_timer(u8_t timer)
+void pause_timer(u8_t timer)
 {
+  ET0 = INTERRUPT_OFF;
   if (timer >= NUMBER_OF_SWTIMERS) {
     A_(printf (__AT__ " Requested timer exceeded max number of timers !\n");)
     return;
   }
 
-  ET0 = INTERRUPT_OFF;
-  timer_table[timer] = TMR_STOPPED;
+  timer_table[timer] = TMR_PAUSED;
   ET0 = INTERRUPT_ON;
 }
 
@@ -273,8 +281,6 @@ void start_timer(u8_t timer)
  * This thread listens to the <callback_kicker> signal and when it is
  * triggered it goes through all software timers and executes the
  * indicated call back methods.
- * This functionality was broken out of the timer 0 __interrupt routine
- * as it was severely instable.
  */
 PT_THREAD(handle_kicker(struct kicker *Kicker) )
 {
@@ -292,12 +298,9 @@ PT_THREAD(handle_kicker(struct kicker *Kicker) )
 
       for (i=0 ; i<NUMBER_OF_SWTIMERS ; i++)
       {
-        if (timer_table[i] == TMR_KICK)
-        {
-          /* Allow timer 0 interrupts while executing callback */
-          // ET0 = INTERRUPT_ON;
-          timer_cbs[i](i);
-          // ET0 = INTERRUPT_OFF;
+        if (timer_table[i] == TMR_KICK) {
+          timer_cbs[i](cb_data[i]);
+          timer_table[i] = TMR_ENDED;
         }
       }
     }

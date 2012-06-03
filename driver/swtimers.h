@@ -43,7 +43,7 @@ enum timer_stat {
   TMR_RUNNING = 0x00,
   TMR_FREE,
   TMR_ALLOCATED,
-  TMR_STOPPED,
+  TMR_PAUSED,
   TMR_KICK,
   TMR_ENDED,
   TMR_ERROR,
@@ -53,7 +53,7 @@ struct kicker {
   struct pt pt;
 };
 
-typedef void (*timer_cb)(u8_t timer) __reentrant;
+typedef void (*timer_cb)(void* cb_data) __reentrant;
 typedef unsigned long timer_time_t;
 //typedef unsigned int timer_time_t;
 
@@ -62,15 +62,15 @@ extern timer_time_t swtimer[NUMBER_OF_SWTIMERS];
 extern u8_t  timer_table[NUMBER_OF_SWTIMERS];
 
 void init_swtimers(void) ;
-void set_timer(u8_t timer, timer_time_t time, timer_cb cb) ;
-void set_timer_cnt(u8_t timer, timer_time_t time) ;
-timer_time_t get_timer(u8_t timer) ;
-u8_t get_timer_status(u8_t timer) ;
-char alloc_timer(void) ;
-u8_t free_timer(u8_t timer) ;
-void stop_timer(u8_t timer) ;
-void start_timer(u8_t timer) ;
-void init_kicker(void) ;
+void set_timer(u8_t timer, timer_time_t time, timer_cb cb, void *cb_data);
+void set_timer_cnt(u8_t timer, timer_time_t time);
+timer_time_t get_timer(u8_t timer);
+u8_t get_timer_status(u8_t timer);
+char alloc_timer(void);
+u8_t free_timer(u8_t timer);
+void pause_timer(u8_t timer);
+void start_timer(u8_t timer);
+void init_kicker(void);
 PT_THREAD(handle_kicker(struct kicker *kick) );
 
 #endif // SWTIMERS_H_INCLUDED
