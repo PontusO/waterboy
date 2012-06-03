@@ -1,0 +1,41 @@
+%!: /header.html
+<script type="text/javascript" src="validate.js"></script>
+<script type="text/javascript">
+<!--
+function validate() {
+var ok=1;
+elem = document.getElementById("idlevel"); if (!isNumOk(elem, 0, 100)) ok=0;
+elem = document.getElementById("idlock"); if (!isNumOk(elem, 1, 128)) ok=0;
+if (!ok) { return doAlert(); }
+return true; }
+//-->
+</script>
+<center>
+<h1>Inställningar för fuktsensorer</h1><hr color="#258D92" size="2" width="90%">
+<form onsubmit="return validate();"><center>
+<table width="90%" class="mytab"><tr><td colspan="2" align="center"><b>Fuktsensor 1</b></td></tr>
+<tr><td>Aktivera fuktsensor</td><td><input type="checkbox" name="me1"></td></tr>
+<tr><td>Aktiveringsnivå (0%-100%)</td><td><input type="text" id="ima1" name="ma1" size="4" maxlength="3" value="45"></td></tr>
+<tr><td>Avstängninsnivå (0%-100%)</td><td><input type="text" id="imd1" name="md1" size="4" maxlength="3" value="75"></td></tr>
+</table><br>
+<table width="90%" class="mytab"><tr><td colspan="2" align="center"><b>Fuktsensor 2</b></td></tr>
+<tr><td>Aktivera fuktsensor</td><td><input type="checkbox" name="me2"></td></tr>
+<tr><td>Aktiveringsnivå (0%-100%)</td><td><input type="text" id="ima2" name="ma2" size="4" maxlength="3" value="45"></td></tr>
+<tr><td>Avstängninsnivå (0%-100%)</td><td><input type="text" id="imd2" name="md2" size="4" maxlength="3" value="75"></td></tr>
+</table><br>
+<table width="90%" class="mytab"><tr><td colspan="2" align="center"><b>Fuktsensor 3</b></td></tr>
+<tr><td>Aktivera fuktsensor</td><td><input type="checkbox" name="me2"></td></tr>
+<tr><td>Aktiveringsnivå (0%-100%)</td><td><input type="text" id="ima3" name="ma3" size="4" maxlength="3" value="45"></td></tr>
+<tr><td>Avstängninsnivå (0%-100%)</td><td><input type="text" id="imd3" name="md3" size="4" maxlength="3" value="75"></td></tr>
+</table><br>
+<table width="90%" class="mytab"><tr><td colspan="2" align="center"><b>Fuktsensor 4</b></td></tr>
+<tr><td>Aktivera fuktsensor</td><td><input type="checkbox" name="me2"></td></tr>
+<tr><td>Aktiveringsnivå (0%-100%)</td><td><input type="text" id="ima4" name="ma4" size="4" maxlength="3" value="45"></td></tr>
+<tr><td>Avstängninsnivå (0%-100%)</td><td><input type="text" id="imd4" name="md4" size="4" maxlength="3" value="75"></td></tr>
+</table>
+</center>
+<hr color="#258D92" size="2" width="90%"><br>
+<input type="submit" name="submit" value="save">
+<input type="reset" name="reset" value="Reset">
+</form>
+%!: /footer.html

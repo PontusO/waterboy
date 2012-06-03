@@ -94,7 +94,6 @@ PT_THREAD(handle_moist_event(moist_event_t *moist_event) __reentrant __banked)
     moist_event->channel = SIG_NEW_ADC_VALUE_RECEIVED;
     SIG_NEW_ADC_VALUE_RECEIVED = -1;
     moist_event->pot_val = adc_get_average(moist_event->channel);
-    //printf ("Pot channel %d, value %d\n", moist_event->channel, moist_event->pot_val);
     if (abs(moist_event->pot_val - moist_event->prev_pot_val[moist_event->channel]) > 4) {
       u16_t temp = moist_event->pot_val;
       /* To create a flicker free lights out ^*/
