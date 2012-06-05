@@ -102,16 +102,13 @@
 		</Unit>
 		<Unit filename="..\apps\webserver\httpd-fs\401.html" />
 		<Unit filename="..\apps\webserver\httpd-fs\404.html" />
-		<Unit filename="..\apps\webserver\httpd-fs\cgi\get_level.cgi" />
-		<Unit filename="..\apps\webserver\httpd-fs\cgi\set_level.cgi" />
-		<Unit filename="..\apps\webserver\httpd-fs\cgi\start_ramp.cgi" />
-		<Unit filename="..\apps\webserver\httpd-fs\cgi\stop_ramp.cgi" />
 		<Unit filename="..\apps\webserver\httpd-fs\cmap.shtml" />
 		<Unit filename="..\apps\webserver\httpd-fs\dig.shtml" />
 		<Unit filename="..\apps\webserver\httpd-fs\footer.html" />
 		<Unit filename="..\apps\webserver\httpd-fs\header.html" />
 		<Unit filename="..\apps\webserver\httpd-fs\index.shtml" />
 		<Unit filename="..\apps\webserver\httpd-fs\map.shtml" />
+		<Unit filename="..\apps\webserver\httpd-fs\moistset.shtml" />
 		<Unit filename="..\apps\webserver\httpd-fs\netset.shtml" />
 		<Unit filename="..\apps\webserver\httpd-fs\pirset.shtml" />
 		<Unit filename="..\apps\webserver\httpd-fs\style.css" />
@@ -230,14 +227,14 @@
 		<Unit filename="..\pthreads\events\core\rule_mgr.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\pthreads\events\events\adc_event.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\pthreads\events\events\adc_event.h" />
 		<Unit filename="..\pthreads\events\events\dig_event.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\pthreads\events\events\dig_event.h" />
+		<Unit filename="..\pthreads\events\events\moist_event.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\pthreads\events\events\moist_event.h" />
 		<Unit filename="..\pthreads\events\events\pir_event.c">
 			<Option compilerVar="CC" />
 		</Unit>

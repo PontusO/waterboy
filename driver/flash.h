@@ -54,6 +54,8 @@ struct sys_config
   char time_zone;                 /* The offset from GMT for our system time */
   char username[9];               /* Authentication user name */
   char password[9];               /* Authentication password */
+  /* Moist sensors */
+  moist_data_t moist_data[4];     /* Control data for the moist sensors */
   /* PIR Sensor */
   u8_t pir_enabled;               /* Indicates if the PIR sensor is enabled */
   u8_t pir_sensitivity;           /* Indicates the sensitivty of the PIR sensor */

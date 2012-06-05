@@ -202,14 +202,6 @@ typedef enum {
 } rule_status_t;
 
 /**
- * This union holds a collection of all event provider data types
- * available in the system.
- */
-union rule_event_data {
-  adc_input_data_t adc_data;
-} rule_event_data_t;
-
-/**
  * This union holds a collection of all action manager data types
  * available in the system.
  */
@@ -248,7 +240,6 @@ struct rule {
   action_mgr_t *action;               /** Pointer to action manager */
   rule_data_t *r_data;                /** Pointer to the volatile data struct */
   unsigned int scenario;              /** Even/Action combination */
-  union rule_event_data event_data;   /** Data instance for event providers*/
   union rule_action_data action_data; /** Data instance for action managers*/
 };
 typedef struct rule rule_t;

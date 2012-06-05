@@ -144,6 +144,20 @@ static const struct parameter_table parmtab[] = {
   PARAM_ENTRY("in1s", set_in1s),
   PARAM_ENTRY("in2m", set_in2m),
   PARAM_ENTRY("in2s", set_in2s),
+  /* Moist sensor data */
+  PARAM_ENTRY("mclr", set_mclr), /* Clear all enable flags */
+  PARAM_ENTRY("me1", set_mex),   /* Set enable flag */
+  PARAM_ENTRY("me2", set_mex),
+  PARAM_ENTRY("me3", set_mex),
+  PARAM_ENTRY("me4", set_mex),
+  PARAM_ENTRY("ma1", set_max),   /* Set activate level */
+  PARAM_ENTRY("ma2", set_max),
+  PARAM_ENTRY("ma3", set_max),
+  PARAM_ENTRY("ma4", set_max),
+  PARAM_ENTRY("md1", set_mdx),   /* Set inactivate level */
+  PARAM_ENTRY("md2", set_mdx),
+  PARAM_ENTRY("md3", set_mdx),
+  PARAM_ENTRY("md4", set_mdx),
 	/* Parameters used in xcgi commands */
   PARAM_ENTRY("channel", cgi_set_channel),
   PARAM_ENTRY("achannel", cgi_set_achannel),
@@ -178,6 +192,21 @@ static char *skip_to_char(char *buf, char chr) __reentrant
   buf++;
 
   return buf;
+}
+
+/*---------------------------------------------------------------------------*/
+static u8_t get_param_num (char* buffer)
+{
+  /* First find the position of the equal sign */
+  buffer = skip_to_char(buffer, '=');
+  /* Now skip back to the first character before */
+  buffer -= 2;
+  /* Loop back to first non numeric character */
+  while (isdigit(*buffer))
+    buffer--;
+  /* Go back to the first numeric character in this parameter */
+  buffer++;
+  return (u8_t)atoi(buffer);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -268,6 +297,60 @@ PARAM_FUNC (set_pirena)
   IDENTIFIER_NOT_USED(buffer);
 
   sys_cfg.pir_enabled = TRUE;
+}
+
+/*---------------------------------------------------------------------------*/
+PARAM_FUNC (set_mclr)
+{
+  IDENTIFIER_NOT_USED(s);
+  IDENTIFIER_NOT_USED(buffer);
+
+  /* Simply prepare this flag in case it was not set to true (Stupid html) */
+  sys_cfg.moist_data[0].enabled = FALSE;
+  sys_cfg.moist_data[1].enabled = FALSE;
+  sys_cfg.moist_data[2].enabled = FALSE;
+  sys_cfg.moist_data[3].enabled = FALSE;
+}
+
+/*---------------------------------------------------------------------------*/
+PARAM_FUNC (set_mex)
+{
+  u8_t entry;
+
+  IDENTIFIER_NOT_USED (s);
+
+  entry = get_param_num (buffer) - 1;
+  sys_cfg.moist_data[entry].enabled = TRUE;
+}
+
+/*---------------------------------------------------------------------------*/
+PARAM_FUNC (set_max)
+{
+  u8_t entry;
+
+  IDENTIFIER_NOT_USED (s);
+
+  entry = get_param_num (buffer) - 1;
+  buffer = skip_to_char(buffer, '=');
+
+  if (NEOP(*buffer)) {
+    sys_cfg.moist_data[entry].activate = atoi(buffer);
+  }
+}
+
+/*---------------------------------------------------------------------------*/
+PARAM_FUNC (set_mdx)
+{
+  u8_t entry;
+
+  IDENTIFIER_NOT_USED (s);
+
+  entry = get_param_num (buffer) - 1;
+  buffer = skip_to_char(buffer, '=');
+
+  if (NEOP(*buffer)) {
+    sys_cfg.moist_data[entry].inactivate = atoi(buffer);
+  }
 }
 
 /*---------------------------------------------------------------------------*/

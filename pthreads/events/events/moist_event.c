@@ -34,8 +34,7 @@
 
 #include "system.h"
 #include "iet_debug.h"
-
-//#include "event_switch.h"
+#include "flash.h"
 #include "moist_event.h"
 #include "absval_mgr.h"
 #include "adc.h"
@@ -90,44 +89,24 @@ PT_THREAD(handle_moist_event(moist_event_t *moist_event) __reentrant __banked)
 
   while (1)
   {
+    long tmp;
+
     PT_WAIT_UNTIL (&moist_event->pt, SIG_NEW_ADC_VALUE_RECEIVED != -1);
     moist_event->channel = SIG_NEW_ADC_VALUE_RECEIVED;
     SIG_NEW_ADC_VALUE_RECEIVED = -1;
-    moist_event->pot_val = adc_get_average(moist_event->channel);
-    if (abs(moist_event->pot_val - moist_event->prev_pot_val[moist_event->channel]) > 4) {
-      u16_t temp = moist_event->pot_val;
-      /* To create a flicker free lights out ^*/
-      if (moist_event->pot_val < CUT_OUT_SPAN)
-        moist_event->pot_val = 0;
-      else {
-#if 0
-        if (moist_event->pot_val < KNEE_LEVEL)
-          moist_event->pot_val = moist_event->pot_val - CUT_OUT_SPAN;
-        else
-          moist_event->pot_val = ((moist_event->pot_val - KNEE_LEVEL) << VALUE_SHIFT) + KNEE_LEVEL;
-#else
-        moist_event->pot_val = moist_event->pot_val << VALUE_SHIFT;
-#endif
-      }
-      /* Make sure maximum value is maxed out */
-      if (moist_event->pot_val >= 0xff00)
-        moist_event->pot_val = 0xffff;
-      A_(printf (__AT__ " pot_val = %04x\n", moist_event->pot_val);)
-      moist_event->prev_pot_val[moist_event->channel] = temp;
+    /* Convert to a percentage */
+    tmp = adc_get_average(moist_event->channel);
+    tmp = (tmp * 100) / 1024;
+    moist_event->pot_val = (int)tmp;
 
-      /* Get the action data pointer from the rule manager */
-      moist_event->rdata = GET_RULE_DATA(&adcevents[moist_event->channel]);
-
-      /* Only do data transfers when there is an existing rule available */
-      if (moist_event->rdata) {
-        /* There is no need to differentiate between different action managers here
-         * since adc events are only compatible with the absolute data manager */
-        moist_event->rdata->adata = moist_event->pot_val;
-        /* Tell the action mgr to use the dynamic data */
-        moist_event->rdata->command = EVENT_USE_DYNAMIC_DATA;
-        /* Send the signal */
-        rule_send_event_signal (&adcevents[moist_event->channel]);
-      }
+    /* Make sure the moist sensor is enabled and check if we need
+     * to trigger the action manager */
+    if (sys_cfg.moist_data[moist_event->channel].enabled &&
+        moist_event->pot_val < sys_cfg.moist_data[moist_event->channel].activate) {
+      /* Send the signal */
+      A_(printf (__AT__ "adc event has triggered, channel %d\n",
+                 moist_event->channel);)
+      rule_send_event_signal (&adcevents[moist_event->channel]);
     }
   }
   PT_END(&moist_event->pt);

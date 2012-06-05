@@ -57,6 +57,10 @@ const struct sys_config default_cfg = {
   (char)2,                                /* Default time zone */
   { "admin", 0, 0, 0, 0 },                /* Default user name and password */
   { "pass", 0, 0, 0, 0, 0 },
+  { { 0, 25, 75 },                        /* Moisture sensor default data */
+    { 0, 25, 75 },
+    { 0, 25, 75 },
+    { 0, 25, 75 } },
   (u8_t)0,                                /* PIR Sensor disabled per default */
   (u8_t)45,                               /* Default PIR Level is 45% */
   (u8_t)5,                                /* Default minimum trigger timeout */

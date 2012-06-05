@@ -38,11 +38,13 @@
 #define CFG_NUM_POTS    4
 
 /*
- * Data types used by the moist_event
+ * Control data structure for the moist sensors
  */
 typedef struct {
-  unsigned char channel;    /* Potentiometer channel */
-} adc_input_data_t;
+  u8_t enabled;
+  u8_t activate;
+  u8_t inactivate;
+} moist_data_t;
 
 typedef struct {
   struct pt pt;

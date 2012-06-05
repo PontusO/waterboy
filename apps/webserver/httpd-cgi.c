@@ -491,6 +491,17 @@ PT_THREAD(get_check_box(struct httpd_state *s, char *ptr) __reentrant)
         state = TRUE;
       break;
 
+    case 30:
+    case 40:
+    case 50:
+    case 60:
+    {
+      u8_t grp = (check_box - 30) / 10;
+      if (sys_cfg.moist_data[grp].enabled)
+        state = TRUE;
+      break;
+    }
+
     default:
       state = 0;
       break;
@@ -585,6 +596,28 @@ PT_THREAD(get_int(struct httpd_state *s, char *ptr) __reentrant)
         myint = 60;
       break;
 
+    /* Retrieve group parameters for moisture sensors */
+    case 30:
+    case 40:
+    case 50:
+    case 60:
+    {
+      u8_t grp = (intno - 30) / 10;
+      intno = 1;
+      myint = sys_cfg.moist_data[grp].activate;
+      break;
+    }
+
+    case 31:
+    case 41:
+    case 51:
+    case 61:
+    {
+      u8_t grp = (intno - 31) / 10;
+      intno = 1;
+      myint = sys_cfg.moist_data[grp].inactivate;
+      break;
+    }
   }
 
   /* intno is used to supress output */

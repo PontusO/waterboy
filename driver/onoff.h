@@ -35,9 +35,9 @@
 void init_onoff (void);
 char set_onoff (u8_t channel, u8_t value);
 
-enum {
+enum relay_state {
   RELAY_OFF = 0,
   RELAY_ON = 1
-} relay_state;
+};
 
 #endif // ONOFF_H_INCLUDED
